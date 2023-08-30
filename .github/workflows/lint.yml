@@ -1,4 +1,4 @@
-name: CI
+name: Lint
 
 # Enable Buildkit and let compose use it to speed up image building
 env:
@@ -8,11 +8,9 @@ env:
 on:
   pull_request:
     branches: ["master", "main"]
-    paths-ignore: ["docs/**"]
 
   push:
     branches: ["master", "main"]
-    paths-ignore: ["docs/**"]
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
@@ -26,7 +24,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: pip
@@ -34,4 +32,4 @@ jobs:
             requirements-dev.lock
 
       - name: Run pre-commit
-        uses: pre-commit/action@v2.0.3
+        uses: pre-commit/action@v3.0.0
